@@ -21,8 +21,14 @@
   <div id='warpContainer' data-offset='150' class='span12'>
     <!-- start php script for project display -->
     <?php 
-      $proj_query = "SELECT * FROM projects ORDER BY date DESC";
-      $projects = fetch_all($proj_query);
+      $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport')
+      $projects = array();
+      for ($i; $i<10; $i++){
+        $projects[$i] = array();
+        $projects[$i]['title'] = 'Title ' .  $i;
+        $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
+        $projects[$i]['image_location'] = 'http://lorempixel.com/400/200'
+      }
       if(!is_null($projects)){
         $i = 0;
         foreach ($projects as $project) {
@@ -31,7 +37,6 @@
             <img src='<?php echo $project['image_location']; ?>' class='img-rounded'>
             <div class='warp_desc'>
               <h5><?php echo $project['title'] ?></h5>
-              <label>Date: </label><p><?php echo $project['date']; ?></p>
               <label>Description: </label><p><?php echo $project['description']; ?></p>
               <p data-link='<?php echo $project['url']; ?>' class='proj_link' id='<?php echo $i; ?>'>View Site</p>
             </div>
