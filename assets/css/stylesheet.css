@@ -3,11 +3,6 @@
     margin: 0px;
     font-family: "Lato", sans-serif;
 }
-
-.close {
-    margin: 10px;
-}
-
 .info {
     display: none;
     position: absolute;
@@ -26,10 +21,9 @@
 .none {
     display: none;
 }
-
 .warp {
-    width: 250px;
-    height: 250px;
+    width: 4em;
+    height: 3em;
     position: fixed;
     display: inline-block;
 }
@@ -41,7 +35,6 @@
 .warp_desc h5 {
     text-align: center;
 }
-
 #warp_display {
     display: none;
     position: absolute;

@@ -1,6 +1,6 @@
 /*!
  * warp.js
- * 
+ *
  * MIT licensed
  *
  * Copyright (C) 2014 Paul Zellmer, http://pazellmer.com
@@ -18,14 +18,13 @@ if (numItems > 0) {
     //variables
 
     var width = $(".warp").width();
+    console.log(width);
     var height = $(".warp").height();
 
-    var x_right = (3 * $(window).width() / 4);
     var x_center = $(window).width() / 2;
     var x_left = $(window).width() / 4;
     var y_top = $(window).height() / 4 + offset;
     var y_center = ($(window).height() + offset) / 2;
-    var y_bottom = 3 * $(window).height() / 4 + offset;
 
 
     var xinc = (x_center - x_left) / (numItems / 4);
@@ -37,7 +36,17 @@ if (numItems > 0) {
     var zindex = 200;
     var zindex_inc = parseInt(800 / numItems);
 
-
+    function position(item, i) {
+        item.attr("id", "warp" + arrayCoord[i].index);
+        item.animate({
+            left: arrayCoord[i].x_axis,
+            top: arrayCoord[i].y_axis,
+            "z-index": arrayCoord[i].z_index,
+            width: arrayCoord[i].width,
+            height: arrayCoord[i].height,
+            opacity: arrayCoord[i].opacity
+        }, 2000)
+    }
 
     // Gather objects, count and organize array, coordinates and structure
     arrayCoord = [];
@@ -117,30 +126,14 @@ if (numItems > 0) {
         // up
         if (e.keyCode == 38) {
             $("#warpContainer").append($("#warpContainer").children(".warp:first"));
-            $(".warp").each(function(i) {
-                $(this).attr("id", "warp" + arrayCoord[i].index);
-                $(this).animate({
-                    left: arrayCoord[i].x_axis,
-                    top: arrayCoord[i].y_axis,
-                    "z-index": arrayCoord[i].z_index,
-                    width: arrayCoord[i].width,
-                    height: arrayCoord[i].height,
-                    opacity: arrayCoord[i].opacity
-                }, 2000)
-            });
-            // down		
+            $(".warp").each(
+                position($(this), i)
+            );
+            // down     
         } else if (e.keyCode == 40) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(i) {
-                $(this).attr("id", "warp" + arrayCoord[i].index);
-                $(this).animate({
-                    left: arrayCoord[i].x_axis,
-                    top: arrayCoord[i].y_axis,
-                    "z-index": arrayCoord[i].z_index,
-                    width: arrayCoord[i].width,
-                    height: arrayCoord[i].height,
-                    opacity: arrayCoord[i].opacity
-                }, 2000)
+                position($(this), i)
             });
         }
     })
