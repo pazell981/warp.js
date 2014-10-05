@@ -18,7 +18,6 @@ if (numItems > 0) {
     //variables
 
     var width = $(".warp").width();
-    console.log(width);
     var height = $(".warp").height();
 
     var x_center = $(window).width() / 2;
@@ -125,15 +124,16 @@ if (numItems > 0) {
     $(document).on("keydown", function(e) {
         // up
         if (e.keyCode == 38) {
+            console.log("hello");
             $("#warpContainer").append($("#warpContainer").children(".warp:first"));
-            $(".warp").each(
-                position($(this), i)
-            );
-            // down     
+            $(".warp").each(function (i){
+                position($(this), i);                
+            });
+        // down     
         } else if (e.keyCode == 40) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-            $(".warp").each(function(i) {
-                position($(this), i)
+            $(".warp").each(function (i){
+                position($(this), i);
             });
         }
     })

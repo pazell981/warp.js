@@ -17,12 +17,12 @@
   
   </head>
   <body>
-  <div id='warpContainer' data-offset='150' class='span12'>
+  <div id='warpContainer' data-offset='0' class='span12'>
     <!-- start php script for example display -->
     <?php 
       $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
       $projects = array();
-      for ($i=0; $i<10; $i++){
+      for ($i=0; $i<12; $i++){
         $projects[$i] = array();
         $projects[$i]['title'] = 'Title ' .  $i;
         $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
