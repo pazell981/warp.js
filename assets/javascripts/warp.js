@@ -7,8 +7,7 @@
  */
 
 //document setup
-
-$(".warp").hide();
+$(".warp_desc").hide();
 $("#warpContainer").parent().prepend("<div id='warp_display'></div>");
 $("#warp_display").hide();
 

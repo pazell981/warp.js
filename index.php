@@ -5,7 +5,7 @@
 
     <title>Warp JS</title>
 
-    <meta name="robot" content="index,nofollow">
+    <meta name="robot" content="noindex,nofollow">
     <meta name="copyright" content="Copyright © 2014 Paul Zellmer. All Rights Reserved.">
     <meta name="author" content="Paul Zellmer">
 
@@ -14,20 +14,19 @@
     <link rel="stylesheet" href="assets/css/stylesheet.css">
     
     <script src="/lib/js/jquery-2.1.1.min.js" charset="utf-8"></script>
-    <script src="/lib/js/jquery-ui-1.9.2.custom.min.js" charset="utf-8"></script>    
   
   </head>
   <body>
   <div id='warpContainer' data-offset='150' class='span12'>
-    <!-- start php script for project display -->
+    <!-- start php script for example display -->
     <?php 
-      $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport')
+      $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
       $projects = array();
-      for ($i; $i<10; $i++){
+      for ($i=0; $i<10; $i++){
         $projects[$i] = array();
         $projects[$i]['title'] = 'Title ' .  $i;
         $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
-        $projects[$i]['image_location'] = 'http://lorempixel.com/400/200'
+        $projects[$i]['image_location'] = 'http://lorempixel.com/400/200/' . $categories[rand(0, count($categories))];
       }
       if(!is_null($projects)){
         $i = 0;
