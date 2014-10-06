@@ -34,11 +34,11 @@ function rndItems(){
     }
 }
 
-function Coord(index, x_axis, y_axis, z_index, width, height, opacity){
+function Coord(index, xAxis, yAxis, zIndex, width, height, opacity){
     this.index = index;
-    this.x_axis = x_axis;
-    this.y_axis = y_axis;
-    this.z_index = z_index;
+    this.x_axis = xAxis;
+    this.y_axis = yAxis;
+    this.z_index = zIndex;
     this.width = width;
     this.height = height;
     this.opacity = opacity;
@@ -80,26 +80,27 @@ if (numItems > 0) {
         if (counter == 1) {
             //left
             xAxis = Math.round(((xCenter + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-            arrayCoord[i] = new Coord(i + "left", xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            arrayCoord[i] = new Coord(i, xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
         } else if (counter == 2) {
             //top
             yAxis = Math.round(((yCenter + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-            arrayCoord[i] = new Coord(i + "top", Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            arrayCoord[i] = new Coord(i, Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
         } else if (counter == 3) {
             //right
             xAxis = Math.round(((xCenter - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-            arrayCoord[i] = new Coord(i + "right", xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            arrayCoord[i] = new Coord(i, xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
             xMov += xInc;
         } else {
             //bottom
             yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-            arrayCoord[i] = new Coord(i + "bottom", Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            arrayCoord[i] = new Coord(i, Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
             yMov += yInc;
             counter = 0;
         }
         zIndex += zIndexInc;
         counter++;
     }
+
     arrayCoord[arrayCoord.length - 1].z_index = 1000;
 
     // Assign items location and z-index and show items
@@ -135,7 +136,7 @@ if (numItems > 0) {
 
     $(".warp:not(.warp:last)").click(function() {
         var id = $(this).attr("id");
-        var cycle = arrayCoord.length - 1 - parseInt(id.slice(4));
+        var cycle = arrayCoord.length - parseInt(id.slice(4));
         for (i = 0; i < cycle; i++) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(i) {
