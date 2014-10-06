@@ -26,15 +26,15 @@ function position(item, i) {
     }, 2000)
 }
 
-function rndItems(){
-    for (i = 0; i < 4; i++){
-        if ((numItems + i) % 4 == 0){
+function rndItems() {
+    for (i = 0; i < 4; i++) {
+        if ((numItems + i) % 4 == 0) {
             return (numItems + i);
         }
     }
 }
 
-function Coord(index, xAxis, yAxis, zIndex, width, height, opacity){
+function Coord(index, xAxis, yAxis, zIndex, width, height, opacity) {
     this.index = index;
     this.x_axis = xAxis;
     this.y_axis = yAxis;
@@ -72,6 +72,12 @@ if (numItems > 0) {
     var zIndexInc = parseInt(800 / numItems);
 
     var limit = rndItems();
+
+    //////////////////////////////
+    //                          //
+    //          code            //
+    //                          //
+    //////////////////////////////
 
     // Gather objects, count and organize array, coordinates and structure
     arrayCoord = [];
@@ -120,13 +126,13 @@ if (numItems > 0) {
         // up
         if (e.keyCode == 38) {
             $("#warpContainer").append($("#warpContainer").children(".warp:first"));
-            $(".warp").each(function (i){
-                position($(this), i);                
+            $(".warp").each(function(i) {
+                position($(this), i);
             });
         // down     
         } else if (e.keyCode == 40) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-            $(".warp").each(function (i){
+            $(".warp").each(function(i) {
                 position($(this), i);
             });
         }
