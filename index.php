@@ -17,36 +17,38 @@
   
   </head>
   <body>
-  <div id='warpContainer' data-offset='0' class='span12'>
-    <!-- start php script for example display -->
-    <?php 
-      $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
-      $projects = array();
-      for ($i=0; $i<12; $i++){
-        $projects[$i] = array();
-        $projects[$i]['title'] = 'Title ' .  $i;
-        $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
-        $projects[$i]['image_location'] = 'http://lorempixel.com/400/200/' . $categories[rand(0, count($categories))];
-      }
-      if(!is_null($projects)){
-        $i = 0;
-        foreach ($projects as $project) {
-          ?>
-          <div class='warp' class='span-12' >
-            <img src='<?php echo $project['image_location']; ?>' class='img-rounded'>
-            <div class='warp_desc'>
-              <h5><?php echo $project['title'] ?></h5>
-              <label>Description: </label><p><?php echo $project['description']; ?></p>
-              <p data-link='<?php echo $project['url']; ?>' class='proj_link' id='<?php echo $i; ?>'>View Site</p>
-            </div>
-          </div>
-          <?php
-          $i++;
+    <div id='warpContainer' data-offset='0' class='span12'>
+
+      <!-- start php script for example display -->
+      
+      <?php 
+        $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
+        $projects = array();
+        for ($i=0; $i<11; $i++){
+          $projects[$i] = array();
+          $projects[$i]['title'] = 'Title ' .  $i;
+          $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
+          $projects[$i]['image_location'] = 'http://lorempixel.com/400/200/' . $categories[rand(0, count($categories))];
         }
-      }
-    ?>
-  </div><!-- end of #warpContainer -->
-  <script src="/assets/javascripts/warp.js" charset="utf-8"></script>
-  <script src="/assets/javascripts/portfolio.js" charset="utf-8"></script>
+        if(!is_null($projects)){
+          $i = 0;
+          foreach ($projects as $project) {
+            ?>
+            <div class='warp' class='span-12' >
+              <img src='<?php echo $project['image_location']; ?>' class='img-rounded'>
+              <div class='warp_desc'>
+                <h5><?php echo $project['title'] ?></h5>
+                <label>Description: </label><p><?php echo $project['description']; ?></p>
+                <p data-link='<?php echo $project['url']; ?>' class='proj_link' id='<?php echo $i; ?>'>View Site</p>
+              </div>
+            </div>
+            <?php
+            $i++;
+          }
+        }
+      ?>
+    </div><!-- end of #warpContainer -->
+    <script src="/assets/javascripts/warp.js" charset="utf-8"></script>
+    <script src="/assets/javascripts/portfolio.js" charset="utf-8"></script>
   </body>
 </html>

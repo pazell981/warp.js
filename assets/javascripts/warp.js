@@ -6,10 +6,46 @@
  * Copyright (C) 2014 Paul Zellmer, http://pazellmer.com
  */
 
-//document setup
-$(".warp_desc").hide();
+//////////////////////////////
+//                          //
+//      document setup      //
+//                          //
+//////////////////////////////
+
+// functions
+
+function position(item, i) {
+    item.attr("id", "warp" + arrayCoord[i].index);
+    item.animate({
+        left: arrayCoord[i].x_axis,
+        top: arrayCoord[i].y_axis,
+        "z-index": arrayCoord[i].z_index,
+        width: arrayCoord[i].width,
+        height: arrayCoord[i].height,
+        opacity: arrayCoord[i].opacity
+    }, 2000)
+}
+
+function rndItems(){
+    for (i = 0; i < 4; i++){
+        if ((numItems + i) % 4 == 0){
+            return (numItems + i);
+        }
+    }
+}
+
+function Coord(index, x_axis, y_axis, z_index, width, height, opacity){
+    this.index = index;
+    this.x_axis = x_axis;
+    this.y_axis = y_axis;
+    this.z_index = z_index;
+    this.width = width;
+    this.height = height;
+    this.opacity = opacity;
+}
+
+$(".warp_desc, #warp_display").hide();
 $("#warpContainer").parent().prepend("<div id='warp_display'></div>");
-$("#warp_display").hide();
 
 var offset = parseInt($("#warpContainer").attr("data-offset"));
 var numItems = $('.warp').length;
@@ -20,96 +56,54 @@ if (numItems > 0) {
     var width = $(".warp").width();
     var height = $(".warp").height();
 
-    var x_center = $(window).width() / 2;
-    var x_left = $(window).width() / 4;
-    var y_top = $(window).height() / 4 + offset;
-    var y_center = ($(window).height() + offset) / 2;
+    var xCenter = $(window).width() / 2;
+    var xLeft = $(window).width() / 4;
+    var yTop = $(window).height() / 4 + offset;
+    var yCenter = ($(window).height() + offset) / 2;
 
 
-    var xinc = (x_center - x_left) / (numItems / 4);
-    var xmov = xinc;
-    var yinc = (y_center - y_top) / (numItems / 4);
-    var ymov = yinc;
+    var xInc = (xCenter - xLeft) / (numItems / 4);
+    var xMov = xInc;
+    var yInc = (yCenter - yTop) / (numItems / 4);
+    var yMov = yInc;
 
     var counter = 1;
-    var zindex = 200;
-    var zindex_inc = parseInt(800 / numItems);
+    var zIndex = 200;
+    var zIndexInc = parseInt(800 / numItems);
 
-    function position(item, i) {
-        item.attr("id", "warp" + arrayCoord[i].index);
-        item.animate({
-            left: arrayCoord[i].x_axis,
-            top: arrayCoord[i].y_axis,
-            "z-index": arrayCoord[i].z_index,
-            width: arrayCoord[i].width,
-            height: arrayCoord[i].height,
-            opacity: arrayCoord[i].opacity
-        }, 2000)
-    }
+    var limit = rndItems();
 
     // Gather objects, count and organize array, coordinates and structure
     arrayCoord = [];
 
-    for (var i = 0; i < numItems; i++) {
+    for (var i = 0; i < limit; i++) {
         if (counter == 1) {
-            //top
-            y_axis = Math.round(((y_center - ymov - (height * zindex / 1000) / 2) / $(window).height()) * 100);
-            arrayCoord[i] = {
-                index: i,
-                x_axis: Math.round((x_center - (width * zindex / 1000) / 2) / $(window).width() * 100) + "%",
-                y_axis: y_axis + "%",
-                z_index: zindex,
-                width: (width * zindex / 1000),
-                height: (height * zindex / 1000),
-                opacity: (1 * zindex / 1000)
-            };
-        } else if (counter == 2) {
-            //right
-            x_axis = Math.round(((x_center + xmov - (width * zindex / 1000) / 2) / $(window).width()) * 100);
-            arrayCoord[i] = {
-                index: i,
-                x_axis: x_axis + "%",
-                y_axis: Math.round((y_center - (height * zindex / 1000) / 2) / $(window).height() * 100) + "%",
-                z_index: zindex,
-                width: (width * zindex / 1000),
-                height: (height * zindex / 1000),
-                opacity: (1 * zindex / 1000)
-            };
-        } else if (counter == 3) {
-            //bottom
-            y_axis = Math.round(((y_center + ymov - (height * zindex / 1000) / 2) / $(window).height()) * 100);
-            arrayCoord[i] = {
-                index: i,
-                x_axis: Math.round((x_center - (width * zindex / 1000) / 2) / $(window).width() * 100) + "%",
-                y_axis: y_axis + "%",
-                z_index: zindex,
-                width: (width * zindex / 1000),
-                height: (height * zindex / 1000),
-                opacity: (1 * zindex / 1000)
-            };
-            ymov += yinc;
-        } else {
             //left
-            x_axis = Math.round(((x_center - xmov - (width * zindex / 1000) / 2) / $(window).width()) * 100);
-            arrayCoord[i] = {
-                index: i,
-                x_axis: x_axis + "%",
-                y_axis: Math.round((y_center - (height * zindex / 1000) / 2) / $(window).height() * 100) + "%",
-                z_index: zindex,
-                width: (width * zindex / 1000),
-                height: (height * zindex / 1000),
-                opacity: (1 * zindex / 1000)
-            };
-            xmov += xinc;
+            xAxis = Math.round(((xCenter + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+            arrayCoord[i] = new Coord(i + "left", xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+        } else if (counter == 2) {
+            //top
+            yAxis = Math.round(((yCenter + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+            arrayCoord[i] = new Coord(i + "top", Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+        } else if (counter == 3) {
+            //right
+            xAxis = Math.round(((xCenter - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+            arrayCoord[i] = new Coord(i + "right", xAxis + "%", Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100) + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            xMov += xInc;
+        } else {
+            //bottom
+            yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+            arrayCoord[i] = new Coord(i + "bottom", Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100) + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            yMov += yInc;
             counter = 0;
         }
-        zindex += zindex_inc;
+        zIndex += zIndexInc;
         counter++;
     }
     arrayCoord[arrayCoord.length - 1].z_index = 1000;
 
     // Assign items location and z-index and show items
-    $(".warp").each(function(i) {
+    $($(".warp").get().reverse()).each(function(i) {
         $(this).attr("id", "warp" + arrayCoord[i].index);
         $(this).css("left", arrayCoord[i].x_axis);
         $(this).css("top", arrayCoord[i].y_axis);
@@ -124,7 +118,6 @@ if (numItems > 0) {
     $(document).on("keydown", function(e) {
         // up
         if (e.keyCode == 38) {
-            console.log("hello");
             $("#warpContainer").append($("#warpContainer").children(".warp:first"));
             $(".warp").each(function (i){
                 position($(this), i);                
