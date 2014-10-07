@@ -49,6 +49,6 @@
       ?>
     </div><!-- end of #warpContainer -->
     <script src="/assets/javascripts/warp.js" charset="utf-8"></script>
-    <script src="/assets/javascripts/portfolio.js" charset="utf-8"></script>
+    <script src="/assets/javascripts/example.js" charset="utf-8"></script>
   </body>
 </html>
