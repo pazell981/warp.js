@@ -28,7 +28,7 @@
           $projects[$i] = array();
           $projects[$i]['title'] = 'Title ' .  $i;
           $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
-          $projects[$i]['image_location'] = 'http://lorempixel.com/400/200/' . $categories[rand(0, count($categories))];
+          $projects[$i]['image_location'] = 'http://lorempixel.com/400/200/' . $categories[rand(0, count($categories)-1)];
         }
         if(!is_null($projects)){
           $i = 0;
