@@ -90,21 +90,21 @@ if (numItems > 0) {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
                 //left
-                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
             } else if (counter == 2) {
                 //top
-                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100)
+                yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 3) {
                 //right
-                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
                 xMov += xInc;
             } else {
                 //bottom
-                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100)
-                yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
                 yMov += yInc;
                 counter = 0;
             }
@@ -118,37 +118,37 @@ if (numItems > 0) {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
                 //left
-                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
             } else if (counter == 2) {
                 //left top
-                xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 3) {
                 //top
-                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100)
+                yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 4) {
                 //top right
-                xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 5) {
                 //right
-                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
             } else if (counter == 6) {
                 //right bottom
-                xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
                 xMov += xInc;
             } else if (counter == 7) {
                 //bottom
-                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100)
-                yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else {
                 //bottom left
-                xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
                 yMov += yInc;
                 counter = 0;
             }
@@ -163,15 +163,15 @@ if (numItems > 0) {
             if (counter == 1) {
                 //top
                 xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                yAxis = Math.round(((yCenter + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 2) {
                 //bottom right
-                xAxis = Math.round(((xCenter - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xAxis = Math.round(((xCenter + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else {
-                //bottom
-                xAxis = Math.round(((xCenter + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                //bottom left
+                xAxis = Math.round(((xCenter - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
                 xMov += xInc;
                 yMov += yInc;
                 counter = 0;
