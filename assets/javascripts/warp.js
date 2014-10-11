@@ -221,15 +221,7 @@ if (numItems > 0) {
         for (i = 0; i < cycle; i++) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(i) {
-                $(this).attr("id", "warp" + arrayCoord[i].index);
-                $(this).animate({
-                    left: arrayCoord[i].x_axis,
-                    top: arrayCoord[i].y_axis,
-                    "z-index": arrayCoord[i].z_index,
-                    width: arrayCoord[i].width,
-                    height: arrayCoord[i].height,
-                    opacity: arrayCoord[i].opacity
-                }, 1000)
+                position($(this), i);
             });
         }
     });
