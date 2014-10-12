@@ -18,16 +18,16 @@
   </head>
   <body>
     <?php 
-      $shape = array('circle', 'diamond', 'triangle');
+      $shape = ["circle", "diamond", "triangle"];
     ?>
-    <div id='warpContainer' data-offset='0' data-shape='<?php echo $shape[rand(0, count($shape)-1)]; ?>'>
+    <div id='warpContainer' data-offset='0' data-shape='<?php echo $shape[rand(0, count($shape)-1)]; ?>' >
 
       <!-- start php script for example display -->
       
-      <?php
+      <?php 
         $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
         $projects = array();
-        for ($i=0; $i<rand(8,20); $i++){
+        for ($i=0; $i<11; $i++){
           $projects[$i] = array();
           $projects[$i]['title'] = 'Title ' .  $i;
           $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');
@@ -37,7 +37,7 @@
           $i = 0;
           foreach ($projects as $project) {
             ?>
-            <div class='warp'>
+            <div class='warp' >
               <img src='<?php echo $project['image_location']; ?>' class='img-rounded'>
               <div class='warp_desc'>
                 <h5><?php echo $project['title'] ?></h5>

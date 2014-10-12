@@ -217,7 +217,7 @@ if (numItems > 0) {
 
     $(".warp:not(.warp:last)").click(function() {
         var id = $(this).attr("id");
-        var cycle = arrayCoord.length - parseInt(id.slice(4));
+        var cycle = arrayCoord.length - parseInt(id.slice(4)) - 1;
         for (i = 0; i < cycle; i++) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(i) {
