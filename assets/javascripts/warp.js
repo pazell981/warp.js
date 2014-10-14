@@ -90,21 +90,21 @@ if (numItems > 0) {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
                 //left
-                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter - 50 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
             } else if (counter == 2) {
                 //top
                 xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100)
-                yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                yAxis = Math.round(((yCenter - 50 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
             } else if (counter == 3) {
                 //right
-                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter + 50 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
                 xMov += xInc;
             } else {
                 //bottom
                 xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                yAxis = Math.round(((yCenter + 50 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
                 yMov += yInc;
                 counter = 0;
             }
@@ -185,7 +185,7 @@ if (numItems > 0) {
     arrayCoord[arrayCoord.length - 1].z_index = 1000;
 
     // Assign items location and z-index and show items
-    $($(".warp").get().reverse()).each(function(i) {
+    $($(".warp").get()).each(function(i) {
         $(this).attr("id", "warp" + arrayCoord[i].index);
         $(this).css("left", arrayCoord[i].x_axis);
         $(this).css("top", arrayCoord[i].y_axis);
@@ -217,7 +217,7 @@ if (numItems > 0) {
 
     $(".warp:not(.warp:last)").click(function() {
         var id = $(this).attr("id");
-        var cycle = arrayCoord.length - parseInt(id.slice(4)) - 1;
+        var cycle = arrayCoord.length - parseInt(id.slice(4)) - 2;
         for (i = 0; i < cycle; i++) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(i) {
