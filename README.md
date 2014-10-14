@@ -7,7 +7,7 @@ A gallery or presentation layer that shows an image or whatever HTML you like as
 
 For an example see:
 
-http://www.pazellmer.com/warp.js/
+http://www.pazellmer.com/warp_js/
 
 --Motivation--
 
@@ -33,7 +33,7 @@ See index.php for an example of HTML structure.
 
 A "data-offset" can be included in the "warpContainer" tag to push down objects vertically to off set for tool-bar or titles.
 
-A "data-shape" can be included in the "warpContainer" tag to change the formation.  Currently there are diamond, circle and working on a triangle formation.  If none is chosen diamond will be the default.
+A "data-shape" can be included in the "warpContainer" tag to change the formation.  Currently there are diamond, circle and a triangle formation.  If none is chosen diamond will be the default.
 
 --Contributors--
 
