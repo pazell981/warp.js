@@ -18,16 +18,16 @@
   </head>
   <body>
     <?php 
-      $shape = ["circle", "diamond", "triangle"];
+      $shape = ["circle", "diamond", "triangle", "column"];
     ?>
-    <div id='warpContainer' data-offset='0' data-shape='column' >
+    <div id='warpContainer' data-offset='0' data-shape='<?php $shape[rand(0,3)] ?>' >
 
       <!-- start php script for example display -->
       
       <?php 
         $categories = array('abstract', 'animals', 'business', 'city', 'food', 'nightlife', 'fashion', 'people', 'nature', 'sports', 'technics', 'transport');
         $projects = array();
-        for ($i=0; $i<11; $i++){
+        for ($i=0; $i<rand(5,18); $i++){
           $projects[$i] = array();
           $projects[$i]['title'] = 'Title ' .  $i;
           $projects[$i]['description'] = file_get_contents('http://loripsum.net/api/1/short/decorate/headers');

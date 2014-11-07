@@ -44,8 +44,8 @@ function Coord(index, xAxis, yAxis, zIndex, width, height, opacity) {
     this.opacity = opacity;
 }
 
-$("#warpContainer").parent().prepend("<div id='warp_display'></div>");
 $(".warp_desc, #warp_display").hide();
+$("#warpContainer").parent().prepend("<div id='warp_display'></div>");
 
 var offset = parseInt($("#warpContainer").attr("data-offset"));
 var shape = $("#warpContainer").attr("data-shape");
@@ -55,7 +55,6 @@ if (shape == "") {
 var numItems = $('.warp').length;
 
 if (numItems > 0) {
-   
     //variables
 
     var width = $(".warp").width();
@@ -113,26 +112,6 @@ if (numItems > 0) {
             zIndex += zIndexInc;
             counter++;
         }
-    }
-
-    if (shape == "column") {
-        for (var i=0; i <limit; i++){
-            if(counter == 1){
-                //keft
-                xAxis= Math.round(((xCenter - 50 - xMov - (width * zIndex/1000)/2)/$(window).width())*100);
-                yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
-            } else {
-                //right
-                xAxis= Math.round(((xCenter + 50 + xMov - (width * zIndex/1000)/2)/$(window).width())*100);
-                yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
-                xMov+= xInc;
-                counter = 0;
-            }
-            arrayCoord[i] = new Coord(i, xAxis + "%", yAxis + "%", zIndex, (width *zIndex/1000), (height * zIndex / 1000), (1 *zIndex/1000));
-            zIndex+= zIndexInc;
-            counter++
-        }
-
     }
 
     if (shape == "circle") {
@@ -203,14 +182,14 @@ if (numItems > 0) {
         }
     }
 
-    arrayCoord[arrayCoord.length - 1].zIndex = 1000;
+    arrayCoord[arrayCoord.length - 1].z_index = 1000;
 
     // Assign items location and z-index and show items
     $($(".warp").get()).each(function(i) {
         $(this).attr("id", "warp" + arrayCoord[i].index);
         $(this).css("left", arrayCoord[i].x_axis);
         $(this).css("top", arrayCoord[i].y_axis);
-        $(this).css("z-index", arrayCoord[i].zIndex);
+        $(this).css("z-index", arrayCoord[i].z_index);
         $(this).css("width", arrayCoord[i].width);
         $(this).css("height", arrayCoord[i].height);
         $(this).css("opacity", arrayCoord[i].opacity);
@@ -236,7 +215,7 @@ if (numItems > 0) {
 
     // Mouse click to item
 
-    $(".warp:not(.warp:last)").click(function() {
+    $(document).on("click",".warp:not(.warp:last)", function() {
         var id = $(this).attr("id");
         var cycle = arrayCoord.length - parseInt(id.slice(4)) - 2;
         for (i = 0; i < cycle; i++) {
