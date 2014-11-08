@@ -225,12 +225,13 @@ if (numItems > 0) {
         $("#warp_display").children().show();
         $("#overlay").fadeToggle();
     });
-    $("#overlay, #warp_display").click(function() {
-        $("#overlay").fadeToggle();
-        continuous = true;
-        $(function(){
+    $("#overlay").click(function() {
+        $("#overlay").fadeOut(1000)
+        setTimeout(function(){
+            $("#overlay").hide();
+            continuous = true;
             Continuous();
-        });
+        }, 1000);
     })
     Continuous();
 };
