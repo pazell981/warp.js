@@ -28,7 +28,7 @@
     display: inline-block;
 }
 .warp img {
-    width: 100%;
+    width: 90%;
     height: 90%;
     margin: 5px auto;
     cursor: pointer;
@@ -36,8 +36,11 @@
 .warp_desc h5 {
     text-align: center;
 }
+#overlay{
+    width: 100vw;
+    height: 100vh;
+}
 #warp_display {
-    display: none;
     position: absolute;
     padding: 25px;
     min-width: 20%;

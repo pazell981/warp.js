@@ -20,7 +20,7 @@
     <?php 
       $shape = ["circle", "diamond", "triangle", "column"];
     ?>
-    <div id='warpContainer' data-offset='0' data-shape='<?php $shape[rand(0,3)] ?>' >
+    <div id='warpContainer' data-offset='0' data-shape='<?php echo $shape[rand(0,3)] ?>' data-continuous='TRUE'>
 
       <!-- start php script for example display -->
       

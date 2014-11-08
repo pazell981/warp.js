@@ -7,7 +7,7 @@
  */
 ;
 
-function position(c, d) {
+function position(c, d, time) {
     c.attr("id", "warp" + arrayCoord[d].index);
     c.animate({
         left: arrayCoord[d].x_axis,
@@ -16,7 +16,7 @@ function position(c, d) {
         width: arrayCoord[d].width,
         height: arrayCoord[d].height,
         opacity: arrayCoord[d].opacity
-    }, 2000)
+    }, time)
 }
 
 function rndItems() {
@@ -36,12 +36,31 @@ function Coord(n, l, h, k, m, j, o) {
     this.height = j;
     this.opacity = o
 }
-$(".warp_desc, #warp_display").hide();
-$("#warpContainer").parent().prepend("<div id='warp_display'></div>");
+
+function Continuous(){
+    $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
+    $(".warp").each(function(a) {
+        position($(this), a, 8000);
+    })
+    setTimeout(function(){
+        if (continuous == true){
+            Continuous();
+        }
+    },8000);
+}
+
+$("#warpContainer").parent().prepend("<div id='overlay'><div id='warp_display'></div></div>");
+$(".warp_desc, #overlay").hide();
 var offset = parseInt($("#warpContainer").attr("data-offset"));
 var shape = $("#warpContainer").attr("data-shape");
 if (shape == "") {
     shape = "diamond"
+}
+var continuous = $("#warpContainer").attr("data-continuous");
+if (continuous == "true" || continuous == "TRUE"){
+    continuous = true
+} else {
+    continuous = false
 }
 var numItems = $(".warp").length;
 if (numItems > 0) {
@@ -59,6 +78,7 @@ if (numItems > 0) {
     var zIndex = 200;
     var zIndexInc = parseInt(800 / numItems);
     var limit = rndItems();
+    var movOffset = limit-numItems+1;
     arrayCoord = [];
     if (shape == "diamond") {
         for (var i = 0; i < limit; i++) {
@@ -156,7 +176,6 @@ if (numItems > 0) {
             counter++
         }
     }
-    arrayCoord[arrayCoord.length - 1].z_index = 1000;
     $($(".warp").get()).each(function(b) {
         $(this).attr("id", "warp" + arrayCoord[b].index);
         $(this).css("left", arrayCoord[b].x_axis);
@@ -168,41 +187,50 @@ if (numItems > 0) {
     });
     $(document).on("keydown", function(b) {
         if (b.keyCode == 38) {
+            continuous = false;
+            $(".warp").stop(true);
             $("#warpContainer").append($("#warpContainer").children(".warp:first"));
             $(".warp").each(function(a) {
-                position($(this), a)
+                position($(this), a, 2000)
             })
-        } else {
-            if (b.keyCode == 40) {
-                $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-                $(".warp").each(function(a) {
-                    position($(this), a)
-                })
-            }
+        } else if (b.keyCode == 40) {
+            continuous = false;
+            $(".warp").stop(true);
+            $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
+            $(".warp").each(function(a) {
+                position($(this), a, 2000)
+            })
         }
     });
     $(document).on("click", ".warp:not(.warp:last)", function() {
+        continuous = false;
+        $(".warp").stop(true);
         var that = $(this);
         var c = $(this).attr("id");
-        var d = arrayCoord.length - parseInt(c.slice(4)) - 3;
+        var d = arrayCoord.length - parseInt(c.slice(4))-movOffset;
         for (i = 0; i < d; i++) {
             $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
             $(".warp").each(function(a) {
-                position($(this), a)
+                position($(this), a, 1000);
             })
         }
         setTimeout(function() {
             $("#warp_display").html(that.html());
             $("#warp_display").children().show();
-            $("#warp_display").fadeToggle()
+            $("#overlay").fadeToggle();
         }, 2000)
     });
     $(document).on("click", ".warp:last", function() {
         $("#warp_display").html($(this).html());
         $("#warp_display").children().show();
-        $("#warp_display").fadeToggle()
+        $("#overlay").fadeToggle();
     });
-    $("#warp_display").click(function() {
-        $("#warp_display").fadeToggle()
+    $("#overlay, #warp_display").click(function() {
+        $("#overlay").fadeToggle();
+        continuous = true;
+        $(function(){
+            Continuous();
+        });
     })
+    Continuous();
 };

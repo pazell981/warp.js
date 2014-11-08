@@ -11,7 +11,7 @@ http://www.pazellmer.com/warp_js/
 
 --Motivation--
 
-Created this script to present the sites in my portfolio.  I plan on adding more formations than the diamond and circle shape as well other options.
+Created this script to present the sites in my portfolio.  
 
 --Installation--
 
@@ -21,7 +21,7 @@ To use this script create a html div container with an id of "warpContainer" tha
 
 The structure should look like:
 
-	<div id="warpContainer" data-offset="" data-shape="">
+	<div id="warpContainer" data-offset="" data-shape="" data-continuous="">
 		<div class="warp">
 			<div class="warp_desc">
 				...
@@ -33,7 +33,9 @@ See index.php for an example of HTML structure.
 
 A "data-offset" can be included in the "warpContainer" tag to push down objects vertically to off set for tool-bar or titles.
 
-A "data-shape" can be included in the "warpContainer" tag to change the formation.  Currently there are diamond, circle and a triangle formation.  If none is chosen diamond will be the default.
+A "data-shape" can be included in the "warpContainer" tag to change the formation.  Currently there are diamond, circle, triangle and column formation.  If none is chosen diamond will be the default.
+
+A "data-continuous" can be set to TRUE to have continuous animation or set to FALSE to only animate upon interaction.
 
 --Contributors--
 
