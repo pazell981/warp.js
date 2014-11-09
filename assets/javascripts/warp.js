@@ -38,15 +38,17 @@ function Coord(n, l, h, k, m, j, o) {
 }
 
 function Continuous(){
-    $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-    $(".warp").each(function(a) {
-        position($(this), a, 8000);
-    })
-    setTimeout(function(){
-        if (continuous == true){
-            Continuous();
-        }
-    },8000);
+    if(!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)){
+        $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
+        $(".warp").each(function(a) {
+            position($(this), a, 8000);
+        })
+        setTimeout(function(){
+            if (continuous == true){
+                Continuous();
+            }
+        },8000);
+    }
 }
 
 $("#warpContainer").parent().prepend("<div id='overlay'><div id='warp_display'></div></div>");
