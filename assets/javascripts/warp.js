@@ -37,29 +37,32 @@ function Coord(n, l, h, k, m, j, o) {
     this.opacity = o
 }
 
-function Continuous(){
-    if(!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)){
+function Continuous() {
+    if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
         $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
         $(".warp").each(function(a) {
             position($(this), a, 8000);
         })
-        setTimeout(function(){
-            if (continuous == true){
+        setTimeout(function() {
+            if (continuous == true) {
                 Continuous();
             }
-        },8000);
+        }, 8000);
     }
 }
 
 $("#warpContainer").parent().prepend("<div id='overlay'><div id='warp_display'></div></div>");
 $(".warp_desc, #overlay").hide();
-var offset = parseInt($("#warpContainer").attr("data-offset"));
-var shape = $("#warpContainer").attr("data-shape");
-if (shape == "") {
-    shape = "diamond"
-}
+var yOffset = parseInt($("#warpContainer").attr("data-yOffset")) || 0;
+var xOffset = parseInt($("#warpContainer").attr("data-xOffset")) || 0;
+var ySize = parseInt($("#warpContainer").attr("data-ySize")) || 0;
+var xSize = parseInt($("#warpContainer").attr("data-xSize")) || 0;
+var shape = $("#warpContainer").attr("data-shape") || "diamond";
 var continuous = $("#warpContainer").attr("data-continuous");
-if (continuous == "true" || continuous == "TRUE"){
+console.log('yOffset', yOffset, 'xOffset', xOffset);
+console.log('ySize', ySize, 'xSize', xSize);
+console.log('shape', shape)
+if (continuous == "true" || continuous == "TRUE") {
     continuous = true
 } else {
     continuous = false
@@ -68,10 +71,10 @@ var numItems = $(".warp").length;
 if (numItems > 0) {
     var width = $(".warp").width();
     var height = $(".warp").height();
-    var xCenter = $(window).width() / 2;
-    var xLeft = $(window).width() / 4;
-    var yTop = $(window).height() / 4 + offset;
-    var yCenter = ($(window).height() + offset) / 2;
+    var xCenter = ($(window).width() + xOffset) / 2;
+    var xLeft = $(window).width() / 4 + xOffset;
+    var yTop = $(window).height() / 4 + yOffset;
+    var yCenter = ($(window).height() + yOffset) / 2;
     var xInc = (xCenter - xLeft) / (numItems / 4);
     var xMov = xInc;
     var yInc = (yCenter - yTop) / (numItems / 4);
@@ -80,29 +83,25 @@ if (numItems > 0) {
     var zIndex = 200;
     var zIndexInc = parseInt(800 / numItems);
     var limit = rndItems();
-    var movOffset = limit-numItems+1;
+    var movOffset = limit - numItems + 1;
     arrayCoord = [];
     if (shape == "diamond") {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
-                xAxis = Math.round(((xCenter - 50 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter - xSize - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100)
+            } else if (counter == 2) {
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter - ySize - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else if (counter == 3) {
+                xAxis = Math.round(((xCenter + xSize + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
+                xMov += xInc
             } else {
-                if (counter == 2) {
-                    xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                    yAxis = Math.round(((yCenter - 50 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                } else {
-                    if (counter == 3) {
-                        xAxis = Math.round(((xCenter + 50 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                        yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100);
-                        xMov += xInc
-                    } else {
-                        xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                        yAxis = Math.round(((yCenter + 50 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-                        yMov += yInc;
-                        counter = 0
-                    }
-                }
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                yMov += yInc;
+                counter = 0
             }
             arrayCoord[i] = new Coord(i, xAxis + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
             zIndex += zIndexInc;
@@ -112,44 +111,32 @@ if (numItems > 0) {
     if (shape == "circle") {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
-                xAxis = Math.round(((xCenter - 100 - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                xAxis = Math.round(((xCenter - xSize - xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
                 yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100)
+            } else if (counter == 2) {
+                xAxis = Math.round(((xCenter - xSize - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter - ySize - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else if (counter == 3) {
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter - ySize - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else if (counter == 4) {
+                xAxis = Math.round(((xCenter + xSize + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter - ySize - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else if (counter == 5) {
+                xAxis = Math.round(((xCenter + xSize + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100)
+            } else if (counter == 6) {
+                xAxis = Math.round(((xCenter + xSize + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+            } else if (counter == 7) {
+                xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
             } else {
-                if (counter == 2) {
-                    xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                    yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                } else {
-                    if (counter == 3) {
-                        xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                        yAxis = Math.round(((yCenter - 100 - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                    } else {
-                        if (counter == 4) {
-                            xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                            yAxis = Math.round(((yCenter - 100 - yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                        } else {
-                            if (counter == 5) {
-                                xAxis = Math.round(((xCenter + 100 + xMov - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                                yAxis = Math.round((yCenter - (height * zIndex / 1000) / 2) / $(window).height() * 100)
-                            } else {
-                                if (counter == 6) {
-                                    xAxis = Math.round(((xCenter + 100 + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                                    yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-                                    xMov += xInc
-                                } else {
-                                    if (counter == 7) {
-                                        xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                                        yAxis = Math.round(((yCenter + 100 + yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                                    } else {
-                                        xAxis = Math.round(((xCenter - 100 - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                                        yAxis = Math.round(((yCenter + 100 + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-                                        yMov += yInc;
-                                        counter = 0
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                xAxis = Math.round(((xCenter - xSize - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xMov += xInc;
+                yMov += yInc;
+                counter = 0;
             }
             arrayCoord[i] = new Coord(i, xAxis + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
             zIndex += zIndexInc;
@@ -160,80 +147,95 @@ if (numItems > 0) {
         for (var i = 0; i < limit; i++) {
             if (counter == 1) {
                 xAxis = Math.round((xCenter - (width * zIndex / 1000) / 2) / $(window).width() * 100);
-                yAxis = Math.round(((yCenter - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+                yAxis = Math.round(((yCenter - ySize - yMov - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else if (counter == 2) {
+                xAxis = Math.round(((xCenter + xSize + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
             } else {
-                if (counter == 2) {
-                    xAxis = Math.round(((xCenter + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                    yAxis = Math.round(((yCenter + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
-                } else {
-                    xAxis = Math.round(((xCenter - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
-                    yAxis = Math.round(((yCenter + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
-                    xMov += xInc;
-                    yMov += yInc;
-                    counter = 0
-                }
+                xAxis = Math.round(((xCenter - xSize - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter + ySize + yMov / 2 - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xMov += xInc;
+                yMov += yInc;
+                counter = 0
             }
             arrayCoord[i] = new Coord(i, xAxis + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
             zIndex += zIndexInc;
             counter++
         }
     }
-    $($(".warp").get()).each(function(b) {
-        $(this).attr("id", "warp" + arrayCoord[b].index);
-        $(this).css("left", arrayCoord[b].x_axis);
-        $(this).css("top", arrayCoord[b].y_axis);
-        $(this).css("z-index", arrayCoord[b].z_index);
-        $(this).css("width", arrayCoord[b].width);
-        $(this).css("height", arrayCoord[b].height);
-        $(this).css("opacity", arrayCoord[b].opacity)
-    });
-    $(document).on("keydown", function(b) {
-        if (b.keyCode == 38) {
-            continuous = false;
-            $(".warp").stop(true);
-            $("#warpContainer").append($("#warpContainer").children(".warp:first"));
-            $(".warp").each(function(a) {
-                position($(this), a, 2000)
-            })
-        } else if (b.keyCode == 40) {
-            continuous = false;
-            $(".warp").stop(true);
-            $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-            $(".warp").each(function(a) {
-                position($(this), a, 2000)
-            })
+    if (shape == "column") {
+        for (var i = 0; i < limit; i++) {
+            if (counter == 1) {
+                xAxis = Math.round((xCenter + xSize + xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width() * 100);
+                yAxis = Math.round(((yCenter - (height * zIndex / 1000) / 2) / $(window).height()) * 100)
+            } else {
+                xAxis = Math.round(((xCenter - xSize - xMov / 2 - (width * zIndex / 1000) / 2) / $(window).width()) * 100);
+                yAxis = Math.round(((yCenter - (height * zIndex / 1000) / 2) / $(window).height()) * 100);
+                xMov += xInc;
+                yMov += yInc;
+                counter = 0
+            }
+            arrayCoord[i] = new Coord(i, xAxis + "%", yAxis + "%", zIndex, (width * zIndex / 1000), (height * zIndex / 1000), (1 * zIndex / 1000));
+            zIndex += zIndexInc;
+            counter++
         }
-    });
-    $(document).on("click", ".warp:not(.warp:last)", function() {
+    }
+$($(".warp").get()).each(function(b) {
+    $(this).attr("id", "warp" + arrayCoord[b].index);
+    $(this).css("left", arrayCoord[b].x_axis);
+    $(this).css("top", arrayCoord[b].y_axis);
+    $(this).css("z-index", arrayCoord[b].z_index);
+    $(this).css("width", arrayCoord[b].width);
+    $(this).css("height", arrayCoord[b].height);
+    $(this).css("opacity", arrayCoord[b].opacity)
+});
+$(document).on("keydown", function(b) {
+    if (b.keyCode == 38) {
         continuous = false;
         $(".warp").stop(true);
-        var that = $(this);
-        var c = $(this).attr("id");
-        var d = arrayCoord.length - parseInt(c.slice(4))-movOffset;
-        for (i = 0; i < d; i++) {
-            $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
-            $(".warp").each(function(a) {
-                position($(this), a, 1000);
-            })
-        }
-        setTimeout(function() {
-            $("#warp_display").html(that.html());
-            $("#warp_display").children().show();
-            $("#overlay").fadeToggle();
-        }, 2000)
-    });
-    $(document).on("click", ".warp:last", function() {
-        $("#warp_display").html($(this).html());
+        $("#warpContainer").append($("#warpContainer").children(".warp:first"));
+        $(".warp").each(function(a) {
+            position($(this), a, 2000)
+        })
+    } else if (b.keyCode == 40) {
+        continuous = false;
+        $(".warp").stop(true);
+        $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
+        $(".warp").each(function(a) {
+            position($(this), a, 2000)
+        })
+    }
+});
+$(document).on("click", ".warp:not(.warp:last)", function() {
+    continuous = false;
+    $(".warp").stop(true);
+    var that = $(this);
+    var c = $(this).attr("id");
+    var d = arrayCoord.length - parseInt(c.slice(4)) - movOffset;
+    for (i = 0; i < d; i++) {
+        $("#warpContainer").prepend($("#warpContainer").children(".warp:last"));
+        $(".warp").each(function(a) {
+            position($(this), a, 1000);
+        })
+    }
+    setTimeout(function() {
+        $("#warp_display").html(that.html());
         $("#warp_display").children().show();
         $("#overlay").fadeToggle();
-    });
-    $("#overlay").click(function() {
-        $("#overlay").fadeOut(1000)
-        setTimeout(function(){
-            $("#overlay").hide();
-            continuous = true;
-            Continuous();
-        }, 1000);
-    })
-    Continuous();
+    }, 2000)
+});
+$(document).on("click", ".warp:last", function() {
+    $("#warp_display").html($(this).html());
+    $("#warp_display").children().show();
+    $("#overlay").fadeToggle();
+});
+$("#overlay").click(function() {
+    $("#overlay").fadeOut(1000)
+    setTimeout(function() {
+        $("#overlay").hide();
+        continuous = true;
+        Continuous();
+    }, 1000);
+})
+Continuous();
 };

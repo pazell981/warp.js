@@ -21,7 +21,7 @@ To use this script create a html div container with an id of "warpContainer" tha
 
 The structure should look like:
 
-	<div id="warpContainer" data-offset="" data-shape="" data-continuous="">
+	<div id="warpContainer" data-xOffset="" data-yOffset="" data-shape="" data-continuous="" data-xSize="" data-ySize="">
 		<div class="warp">
 			<div class="warp_desc">
 				...
@@ -31,11 +31,13 @@ The structure should look like:
 
 See index.php for an example of HTML structure.
 
-A "data-offset" can be included in the "warpContainer" tag to push down objects vertically to off set for tool-bar or titles.
+A "data-xOffset" and/or "data-yOffset" can be included in the "warpContainer" tag to move objects vertically and/or horizontally to help with positioning the center.
 
 A "data-shape" can be included in the "warpContainer" tag to change the formation.  Currently there are diamond, circle, triangle and column formation.  If none is chosen diamond will be the default.
 
 A "data-continuous" can be set to TRUE to have continuous animation or set to FALSE to only animate upon interaction.
+
+A "data-xSize" and/or "data-ySize" can be included to increase or decrease the size from the center.
 
 --Contributors--
 
